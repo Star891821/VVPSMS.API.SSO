@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Class1.cs~RF5d6aaf2.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.19.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VVPSMSV1.API.SSO.Domain\VVPSMSV1.API.SSO.Domain.csproj" />
+    <ProjectReference Include="..\VVPSMSV1.API.SSO.Models\VVPSMSV1.API.SSO.Models.csproj" />
+  </ItemGroup>
+
+</Project>
