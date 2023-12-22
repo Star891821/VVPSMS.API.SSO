@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using VVPSMSV1.API.SSO.Domain.Models;
+using VVPSMSV1.API.SSO.Models.ModelsDto;
 
 namespace VVPSMSV1.API.SSO.AutoMapper
 {
@@ -36,13 +38,14 @@ namespace VVPSMSV1.API.SSO.AutoMapper
             //CreateMap<MstAcademicYear, MstAcademicYearDto>().ReverseMap();
             //CreateMap<MstSchoolStream, MstSchoolStreamDto>().ReverseMap();
             //CreateMap<MstUserRole, MstUserRoleDto>().ReverseMap();
-            //CreateMap<MstUser, MstUserDto>().ReverseMap();
-            //CreateMap<Student, StudentDto>().ReverseMap();
-            //CreateMap<StudentDocument, StudentDocumentDto>().ReverseMap();
-            //CreateMap<Teacher, TeacherDto>().ReverseMap();
-            //CreateMap<TeacherDocument, TeacherDocumentDto>().ReverseMap();
-            //CreateMap<Parent, ParentDto>().ReverseMap();
-            //CreateMap<ParentDocument, ParentDocumentDto>().ReverseMap();
+            CreateMap<MstUser, MstUserDto>().ReverseMap();
+            CreateMap<AzureBlobConfiguration, AzureBlobConfigurationDto>().ReverseMap();
+            CreateMap<GoogleConfiguration, GoogleConfigurationDto>().ReverseMap();
+            CreateMap<MicroSoftConfiguration, MicroSoftConfigurationDto>().ReverseMap();
+            CreateMap<MstPermission, MstPermissionDto>().ReverseMap();
+            CreateMap<MstRoleType, MstRoleTypeDto>().ReverseMap();
+            CreateMap<MstUserRole, MstUserRoleDto>().ReverseMap();
+            CreateMap<RolePermissionsMapping, RolePermissionsMappingDto>().ReverseMap();
             //CreateMap<MstDocumentType, MstDocumentTypesDto>().ReverseMap();
             //CreateMap<MstEnquiryQuestionDetail, MstEnquiryQuestionDetailDto>().ReverseMap();
             //CreateMap<Log, LogsDto>().ReverseMap();
