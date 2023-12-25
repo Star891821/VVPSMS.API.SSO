@@ -3,23 +3,23 @@ using System.Collections.Generic;
 
 namespace VVPSMSV1.API.SSO.Domain.Models;
 
-public partial class MstUser
+public partial class Applicant
 {
-    public int UserId { get; set; }
+    public int ApplicantId { get; set; }
 
-    public string Username { get; set; } = null!;
+    public string Applicantname { get; set; } = null!;
 
-    public string Userpassword { get; set; } = null!;
+    public string Applicantpassword { get; set; } = null!;
 
-    public string UserGivenName { get; set; } = null!;
+    public string ApplicantGivenName { get; set; } = null!;
 
-    public string UserSurname { get; set; } = null!;
+    public string ApplicantSurname { get; set; } = null!;
 
-    public string? UserPhone { get; set; }
+    public string? ApplicantPhone { get; set; }
 
     public int RoleId { get; set; }
 
-    public string UserLoginType { get; set; } = null!;
+    public string ApplicantLoginType { get; set; } = null!;
 
     public int Enforce2Fa { get; set; }
 
@@ -33,7 +33,7 @@ public partial class MstUser
 
     public DateTime? LastloginAt { get; set; }
 
-    public string? Useremail { get; set; }
+    public string? Applicantemail { get; set; }
 
     public virtual MstUserRole Role { get; set; } = null!;
 }

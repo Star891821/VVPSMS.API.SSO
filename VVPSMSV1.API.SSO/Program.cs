@@ -88,7 +88,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.DefaultIgnoreCondition =
         JsonIgnoreCondition.WhenWritingNull;
 });
-builder.Services.AddDbContext<VVPSMSDBV1Context>(options =>
+builder.Services.AddDbContext<Vvpsmsdbv1Context>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("VVPSMSDBV1"));
     options.EnableSensitiveDataLogging();
@@ -102,6 +102,7 @@ builder.Services.AddTransient<IAzureSSOService<AzureBlobConfigurationDto>, Azure
 //builder.Services.AddScoped<IParentUnitOfWork, ParentUnitOfWork>();
 builder.Services.AddTransient<IGenericService<MstUserRoleDto>, MstUserRoleService>();
 builder.Services.AddTransient<IUserService<MstUserDto>, UserService>();
+builder.Services.AddTransient<IApplicantService<ApplicantDto>, ApplicantService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.Configure<ApiBehaviorOptions>(options
       => options.SuppressModelStateInvalidFilter = true);

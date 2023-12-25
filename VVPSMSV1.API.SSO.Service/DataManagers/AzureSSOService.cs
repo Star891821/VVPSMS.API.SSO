@@ -21,7 +21,7 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
 
         public AzureBlobConfigurationDto? GetByDomain(string domainName)
         {
-            using (var dbContext = new VVPSMSDBV1Context())
+            using (var dbContext = new Vvpsmsdbv1Context())
             {
                 var result = dbContext.AzureBlobConfigurations?.FirstOrDefault(e => e.DomainName.Equals(domainName));
                 return _mapper.Map<AzureBlobConfigurationDto>(result);

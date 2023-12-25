@@ -20,7 +20,7 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
 
         public MicroSoftConfigurationDto? GetByDomain(string domainName)
         {
-            using (var dbContext = new VVPSMSDBV1Context())
+            using (var dbContext = new Vvpsmsdbv1Context())
             {
                 var result = dbContext.GoogleConfigurations?.FirstOrDefault(e => e.DomainName.Equals(domainName));
                 return _mapper.Map<MicroSoftConfigurationDto>(result);
