@@ -26,7 +26,7 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
         }
         public bool Delete(int id)
         {
-            using (var dbContext = new Vvpsmsdbv1Context())
+            using (var dbContext = new VvpsmsSsoContext())
             {
                 var entity = dbContext.Applicants.FirstOrDefault(e => e.ApplicantId == id);
                 if (entity != null)
@@ -40,7 +40,7 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
 
         public List<ApplicantDto> GetAll()
         {
-            using (var dbContext = new Vvpsmsdbv1Context())
+            using (var dbContext = new VvpsmsSsoContext())
             {
                 var result = dbContext.Applicants.ToList();
                 return _mapper.Map<List<ApplicantDto>>(result);
@@ -49,7 +49,7 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
 
         public ApplicantDto? GetById(int id)
         {
-            using (var dbContext = new Vvpsmsdbv1Context())
+            using (var dbContext = new VvpsmsSsoContext())
             {
                 var result = dbContext.Applicants?.FirstOrDefault(e => e.ApplicantId.Equals(id));
                 return _mapper.Map<ApplicantDto>(result);
@@ -60,7 +60,7 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
 
         public ApplicantDto InsertOrUpdate(ApplicantDto entity)
         {
-            using (var dbContext = new Vvpsmsdbv1Context())
+            using (var dbContext = new VvpsmsSsoContext())
             {
                 if (entity != null)
                 {

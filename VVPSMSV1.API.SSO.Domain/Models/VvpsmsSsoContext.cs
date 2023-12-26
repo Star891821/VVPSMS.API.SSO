@@ -15,6 +15,8 @@ public partial class VvpsmsSsoContext : DbContext
     {
     }
 
+    public virtual DbSet<Applicant> Applicants { get; set; }
+
     public virtual DbSet<AzureBlobConfiguration> AzureBlobConfigurations { get; set; }
 
     public virtual DbSet<GoogleConfiguration> GoogleConfigurations { get; set; }
@@ -22,8 +24,6 @@ public partial class VvpsmsSsoContext : DbContext
     public virtual DbSet<MicroSoftConfiguration> MicroSoftConfigurations { get; set; }
 
     public virtual DbSet<MstPermission> MstPermissions { get; set; }
-
-    public virtual DbSet<MstRoleGroup> MstRoleGroups { get; set; }
 
     public virtual DbSet<MstRoleType> MstRoleTypes { get; set; }
 
@@ -35,10 +35,61 @@ public partial class VvpsmsSsoContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=Dell;Initial Catalog=VVPSMS_SSO;User Id=sa;Password=sql2019;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true;Integrated Security=false;");
+        => optionsBuilder.UseSqlServer("Server=Dell;Initial Catalog=VVPSMS_SSO;User Id=sa;Password=sql2019;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true;Integrated Security=false;Column Encryption Setting=enabled;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Applicant>(entity =>
+        {
+            entity.HasKey(e => e.ApplicantId).HasName("PK__tmp_ms_x__F49C60C16DF00562");
+
+            entity.Property(e => e.ApplicantId).HasColumnName("applicant_id");
+            entity.Property(e => e.ApplicantGivenName)
+                .HasMaxLength(255)
+                .UseCollation("Latin1_General_BIN2")
+                .HasColumnName("applicant_givenName");
+            entity.Property(e => e.ApplicantLoginType)
+                .HasMaxLength(255)
+                .HasColumnName("applicant_loginType");
+            entity.Property(e => e.ApplicantPhone)
+                .HasMaxLength(15)
+                .HasColumnName("applicant_phone");
+            entity.Property(e => e.ApplicantSurname)
+                .HasMaxLength(255)
+                .HasColumnName("applicant_surname");
+            entity.Property(e => e.Applicantemail)
+                .HasMaxLength(255)
+                .UseCollation("Latin1_General_BIN2")
+                .HasColumnName("applicantemail");
+            entity.Property(e => e.Applicantname)
+                .HasMaxLength(255)
+                .UseCollation("Latin1_General_BIN2")
+                .HasColumnName("applicantname");
+            entity.Property(e => e.Applicantpassword)
+                .HasMaxLength(255)
+                .UseCollation("Latin1_General_BIN2")
+                .HasColumnName("applicantpassword");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("created_at");
+            entity.Property(e => e.CreatedBy).HasColumnName("created_by");
+            entity.Property(e => e.Enforce2Fa).HasColumnName("enforce2FA");
+            entity.Property(e => e.LastloginAt)
+                .HasColumnType("datetime")
+                .HasColumnName("lastlogin_at");
+            entity.Property(e => e.ModifiedAt)
+                .HasColumnType("datetime")
+                .HasColumnName("modified_at");
+            entity.Property(e => e.ModifiedBy).HasColumnName("modified_by");
+            entity.Property(e => e.RoleId).HasColumnName("role_id");
+
+            entity.HasOne(d => d.Role).WithMany(p => p.Applicants)
+                .HasForeignKey(d => d.RoleId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Applicant__role___5535A963");
+        });
+
         modelBuilder.Entity<AzureBlobConfiguration>(entity =>
         {
             entity
@@ -127,35 +178,6 @@ public partial class VvpsmsSsoContext : DbContext
             entity.Property(e => e.PermissionName)
                 .HasMaxLength(255)
                 .HasColumnName("permission_name");
-        });
-
-        modelBuilder.Entity<MstRoleGroup>(entity =>
-        {
-            entity.HasKey(e => e.RolegroupId).HasName("PK__MstRoleG__680F3A92ED41125D");
-
-            entity.Property(e => e.RolegroupId).HasColumnName("rolegroup_id");
-            entity.Property(e => e.ActiveYn).HasColumnName("activeYN");
-            entity.Property(e => e.CreatedAt)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime")
-                .HasColumnName("created_at");
-            entity.Property(e => e.CreatedBy).HasColumnName("created_by");
-            entity.Property(e => e.ModifiedAt)
-                .HasColumnType("datetime")
-                .HasColumnName("modified_at");
-            entity.Property(e => e.ModifiedBy).HasColumnName("modified_by");
-            entity.Property(e => e.RoleId).HasColumnName("role_id");
-            entity.Property(e => e.RolegroupDescription)
-                .HasMaxLength(255)
-                .HasColumnName("rolegroup_description");
-            entity.Property(e => e.RolegroupName)
-                .HasMaxLength(255)
-                .HasColumnName("rolegroup_name");
-
-            entity.HasOne(d => d.Role).WithMany(p => p.MstRoleGroups)
-                .HasForeignKey(d => d.RoleId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__MstRoleGr__role___3F466844");
         });
 
         modelBuilder.Entity<MstRoleType>(entity =>

@@ -102,6 +102,7 @@ builder.Services.AddTransient<IAzureSSOService<AzureBlobConfigurationDto>, Azure
 //builder.Services.AddScoped<IParentUnitOfWork, ParentUnitOfWork>();
 builder.Services.AddTransient<IGenericService<MstUserRoleDto>, MstUserRoleService>();
 builder.Services.AddTransient<IUserService<MstUserDto>, UserService>();
+builder.Services.AddTransient<IApplicantService<ApplicantDto>, ApplicantService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.Configure<ApiBehaviorOptions>(options
       => options.SuppressModelStateInvalidFilter = true);

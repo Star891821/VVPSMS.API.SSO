@@ -28,6 +28,4 @@ public partial class MstUserRole
     public virtual ICollection<RolePermissionsMapping> RolePermissionsMappings { get; set; } = new List<RolePermissionsMapping>();
 
     public virtual MstRoleType? Roletype { get; set; }
-    public virtual ICollection<MstRoleGroup> MstRoleGroups { get; set; } = new List<MstRoleGroup>();
-
 }
