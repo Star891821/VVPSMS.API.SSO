@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
+using VVPSMSV1.API.SSO.Common;
 using VVPSMSV1.API.SSO.Models.ModelsDto;
 using VVPSMSV1.API.SSO.Service.DataManagers;
 using VVPSMSV1.API.SSO.Service.Interfaces;
@@ -22,8 +24,15 @@ namespace VVPSMSV1.API.SSO.Controllers
         {
             try
             {
-                return applicantService.GetAll();
+                var results =  applicantService.GetAll();
+                foreach(var result in results)
+                {
+                    result.Applicantpassword = CommonMethods.DecryptPassword(_configuration["PassPhrase:Key"], result.Applicantpassword);
+                    result.Applicantname = CommonMethods.DecryptPassword(_configuration["PassPhrase:Key"], result.Applicantname);
+                    result.Applicantemail = CommonMethods.DecryptPassword(_configuration["PassPhrase:Key"], result.Applicantemail);
+                }
 
+                return results;
             }
             catch (Exception ex)
             {
@@ -37,8 +46,12 @@ namespace VVPSMSV1.API.SSO.Controllers
         {
             try
             {
-                return applicantService.GetById(id);
+                var result =  applicantService.GetById(id);
+                result.Applicantpassword = CommonMethods.DecryptPassword(_configuration["PassPhrase:Key"], result.Applicantpassword);
+                result.Applicantname = CommonMethods.DecryptPassword(_configuration["PassPhrase:Key"], result.Applicantname);
+                result.Applicantemail = CommonMethods.DecryptPassword(_configuration["PassPhrase:Key"], result.Applicantemail);
 
+                return result;
             }
             catch (Exception ex)
             {
@@ -46,51 +59,32 @@ namespace VVPSMSV1.API.SSO.Controllers
             }
         }
 
-        [HttpPost, ActionName("InsertOrUpdate1")]
+        [HttpPost, ActionName("InsertOrUpdateWithResponse")]
         [AllowAnonymous]
-        public LoginResponseDto InsertOrUpdateWithResponse([FromBody] LoginRequestDto request)
+        public ApplicantDto InsertOrUpdateWithResponse([FromBody] LoginRequestDto request)
         {
             try
             {
                 var applicantdata = new ApplicantDto()
                 {
                     ApplicantId = request.Id,
-                    Applicantname = request.name,
+                    Applicantname = CommonMethods.EncryptPassword(_configuration["PassPhrase:Key"], request.name),
                     RoleId =request.RoleId,
-                    Applicantemail = request.email,
+                    Applicantemail = CommonMethods.EncryptPassword(_configuration["PassPhrase:Key"], request.email),
                     ApplicantLoginType = request.UserType,
                     ApplicantGivenName = "",
-                    Applicantpassword = request.Password,
+                    Applicantpassword = CommonMethods.EncryptPassword(_configuration["PassPhrase:Key"], request.Password),
                     ApplicantPhone = request.Phone,
                     ApplicantSurname = "",
                     Enforce2Fa = request.Enforce2Fa
                 };
 
-                var data = applicantService.InsertOrUpdate(applicantdata);
-                if(data != null)
-                {
-                    return new LoginResponseDto()
-                    {
-                        Id = data.ApplicantId,
-                        email = data.Applicantemail,
-                        UserName = data.Applicantname,
-                        Role = "Admin",
-                        Status = true
-                    };
+                var result = applicantService.InsertOrUpdate(applicantdata);
+                result.Applicantpassword = CommonMethods.DecryptPassword(_configuration["PassPhrase:Key"], result.Applicantpassword);
+                result.Applicantname = CommonMethods.DecryptPassword(_configuration["PassPhrase:Key"], result.Applicantname);
+                result.Applicantemail = CommonMethods.DecryptPassword(_configuration["PassPhrase:Key"], result.Applicantemail);
 
-                }
-                else
-                {
-                    return new LoginResponseDto()
-                    {
-                        Id = 0,
-                        email = "",
-                        UserName = "",
-                        Role = "",
-                        Status = false
-                    };
-                }
-                
+                return result;
             }
             catch (Exception ex)
             {
@@ -122,6 +116,10 @@ namespace VVPSMSV1.API.SSO.Controllers
         {
             try
             {
+                values.Applicantpassword = CommonMethods.EncryptPassword(_configuration["PassPhrase:Key"], values.Applicantpassword);
+                values.Applicantname = CommonMethods.EncryptPassword(_configuration["PassPhrase:Key"], values.Applicantname);
+                values.Applicantemail = CommonMethods.EncryptPassword(_configuration["PassPhrase:Key"], values.Applicantemail);
+
                 return applicantService.InsertOrUpdate(values);
 
             }
