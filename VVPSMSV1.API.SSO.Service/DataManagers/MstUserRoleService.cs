@@ -16,7 +16,7 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
 
         public bool Delete(int id)
         {
-            using (var dbContext = new VVPSMSDBV1Context())
+            using (var dbContext = new VvpsmsSsoContext())
             {
                 var entity = dbContext.MstUserRoles.FirstOrDefault(e => e.RoleId == id);
 
@@ -44,7 +44,7 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
 
         public List<MstUserRoleDto> GetAll()
         {
-            using (var dbContext = new VVPSMSDBV1Context())
+            using (var dbContext = new VvpsmsSsoContext())
             {
                 var result = dbContext.MstUserRoles.ToList();
                 return _mapper.Map<List<MstUserRoleDto>>(result);
@@ -53,7 +53,7 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
 
         public MstUserRoleDto? GetById(int id)
         {
-            using (var dbContext = new VVPSMSDBV1Context())
+            using (var dbContext = new VvpsmsSsoContext())
             {
                 var result = dbContext.MstUserRoles?.FirstOrDefault(e => e.RoleId.Equals(id));
                 return _mapper.Map<MstUserRoleDto>(result);
@@ -62,7 +62,7 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
 
         public bool InsertOrUpdate(MstUserRoleDto entity)
         {
-            using (var dbContext = new VVPSMSDBV1Context())
+            using (var dbContext = new VvpsmsSsoContext())
             {
                 if (entity != null)
                 {

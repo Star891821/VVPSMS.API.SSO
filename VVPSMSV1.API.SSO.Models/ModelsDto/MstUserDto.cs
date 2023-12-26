@@ -28,6 +28,7 @@ namespace VVPSMSV1.API.SSO.Models.ModelsDto
 
         public string UserLoginType { get; set; } = null!;
 
+        public string? UserEmail { get; set; }
 
     }
 }

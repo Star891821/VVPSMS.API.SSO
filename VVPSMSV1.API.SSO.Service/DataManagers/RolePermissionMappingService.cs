@@ -16,7 +16,7 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
 
         public bool Delete(int id)
         {
-            using (var dbContext = new VVPSMSDBV1Context())
+            using (var dbContext = new VvpsmsSsoContext())
             {
                 var entity = dbContext.RolePermissionsMappings.FirstOrDefault(e => e.MappingId == id);
                 if (entity != null)
@@ -32,7 +32,7 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
 
         public List<RolePermissionsMappingDto> GetAll()
         {
-            using (var dbContext = new VVPSMSDBV1Context())
+            using (var dbContext = new VvpsmsSsoContext())
             {
                 var result = dbContext.RolePermissionsMappings.ToList();
                 return _mapper.Map<List<RolePermissionsMappingDto>>(result);
@@ -41,7 +41,7 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
 
         public RolePermissionsMappingDto? GetById(int id)
         {
-            using (var dbContext = new VVPSMSDBV1Context())
+            using (var dbContext = new VvpsmsSsoContext())
             {
                 var result = dbContext.RolePermissionsMappings?.FirstOrDefault(e => e.MappingId.Equals(id));
                 return _mapper.Map<RolePermissionsMappingDto>(result);
@@ -50,7 +50,7 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
 
         public bool InsertOrUpdate(RolePermissionsMappingDto entity)
         {
-            using (var dbContext = new VVPSMSDBV1Context())
+            using (var dbContext = new VvpsmsSsoContext())
             {
                 if (entity != null)
                 {

@@ -3,13 +3,15 @@ using System.Collections.Generic;
 
 namespace VVPSMSV1.API.SSO.Domain.Models;
 
-public partial class RolePermissionsMapping
+public partial class MstRoleGroup
 {
-    public int MappingId { get; set; }
+    public int RolegroupId { get; set; }
+
+    public string RolegroupName { get; set; } = null!;
+
+    public string? RolegroupDescription { get; set; }
 
     public int RoleId { get; set; }
-
-    public int PermissionId { get; set; }
 
     public int ActiveYn { get; set; }
 
@@ -20,8 +22,6 @@ public partial class RolePermissionsMapping
     public DateTime? ModifiedAt { get; set; }
 
     public int? ModifiedBy { get; set; }
-
-    public virtual MstPermission Permission { get; set; } = null!;
 
     public virtual MstUserRole Role { get; set; } = null!;
 }

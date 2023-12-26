@@ -16,7 +16,7 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
 
         public bool Delete(int id)
         {
-            using (var dbContext = new VVPSMSDBV1Context())
+            using (var dbContext = new VvpsmsSsoContext())
             {
                 var entity = dbContext.MstPermissions.FirstOrDefault(e => e.PermissionId == id);
                 if (entity != null)
@@ -32,7 +32,7 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
 
         public List<MstPermissionDto> GetAll()
         {
-            using (var dbContext = new VVPSMSDBV1Context())
+            using (var dbContext = new VvpsmsSsoContext())
             {
                 var result = dbContext.MstPermissions.ToList();
                 return _mapper.Map<List<MstPermissionDto>>(result);
@@ -41,7 +41,7 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
 
         public MstPermissionDto? GetById(int id)
         {
-            using (var dbContext = new VVPSMSDBV1Context())
+            using (var dbContext = new VvpsmsSsoContext())
             {
                 var result = dbContext.MstPermissions?.FirstOrDefault(e => e.PermissionId.Equals(id));
                 return _mapper.Map<MstPermissionDto>(result);
@@ -50,7 +50,7 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
 
         public bool InsertOrUpdate(MstPermissionDto entity)
         {
-            using (var dbContext = new VVPSMSDBV1Context())
+            using (var dbContext = new VvpsmsSsoContext())
             {
                 if (entity != null)
                 {
