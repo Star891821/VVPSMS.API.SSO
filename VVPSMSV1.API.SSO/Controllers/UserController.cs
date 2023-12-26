@@ -102,8 +102,8 @@ namespace VVPSMS.API.Controllers
         {
             try
             {
-                var res =  userService.InsertOrUpdate(values);
-                return null;
+                return userService.InsertOrUpdate(values);
+               
             }
             catch (Exception ex)
             {

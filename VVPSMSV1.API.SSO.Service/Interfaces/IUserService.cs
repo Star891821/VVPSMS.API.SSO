@@ -2,6 +2,7 @@
 {
     public interface IUserService<T>:IGenericService<T>
     {
+        T InsertOrUpdate(T entity);
         T? GetByName(string name);
     }
 }

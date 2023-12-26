@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using VVPSMSV1.API.SSO.Domain.Models;
 using VVPSMSV1.API.SSO.Models.Enums;
@@ -59,7 +60,7 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
             }
         }
 
-        public bool InsertOrUpdate(MstUserDto entity)
+        public MstUserDto InsertOrUpdate(MstUserDto entity)
         {
             using (var dbContext = new VvpsmsSsoContext())
             {
@@ -84,7 +85,9 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
                         var existingUser = dbContext.MstUsers.FirstOrDefault(x=>x.Username.Equals(entity.Username));
                         if (existingUser != null)
                         {
-                            throw new Exception(ErrorCode.AlreadyExist.ToString());
+                            //throw new Exception(ErrorCode.AlreadyExist.ToString());
+                            
+                            return _mapper.Map<MstUserDto>(existingUser);
                         }
                         else
                         {
@@ -92,10 +95,17 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
                         }
                                             
                     }
-                    dbContext.SaveChanges();
+                 dbContext.SaveChanges();
                 }
-                return true;
+                return _mapper.Map<MstUserDto>(dbContext.MstUsers.AsNoTracking().First(x => x.Username == entity.Username));
+                 
+
             }
+        }
+
+        bool IGenericService<MstUserDto>.InsertOrUpdate(MstUserDto entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

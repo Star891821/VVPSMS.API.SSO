@@ -21,11 +21,13 @@ public partial class MstUserRole
 
     public int? RoletypeId { get; set; }
 
-    public virtual ICollection<MstRoleGroup> MstRoleGroups { get; set; } = new List<MstRoleGroup>();
+    public virtual ICollection<Applicant> Applicants { get; set; } = new List<Applicant>();
 
     public virtual ICollection<MstUser> MstUsers { get; set; } = new List<MstUser>();
 
     public virtual ICollection<RolePermissionsMapping> RolePermissionsMappings { get; set; } = new List<RolePermissionsMapping>();
 
     public virtual MstRoleType? Roletype { get; set; }
+    public virtual ICollection<MstRoleGroup> MstRoleGroups { get; set; } = new List<MstRoleGroup>();
+
 }
