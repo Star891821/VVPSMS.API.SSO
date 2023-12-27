@@ -18,15 +18,15 @@ namespace VVPSMS.API.Controllers.MasterControllers
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult? GetAll()
+        public List<MstUserRoleDto> GetAll()
         {
             try
             {
-                return Ok(GenericService.GetAll());
+                return GenericService.GetAll();
             }
             catch (Exception ex)
             {
-                return StatusCode(500);
+                return null;
             }
         }
 

@@ -19,7 +19,7 @@ public partial class MstUser
 
     public int RoleId { get; set; }
 
-    public string UserLoginType { get; set; } = null!;
+    public string? UserLoginType { get; set; }
 
     public int Enforce2Fa { get; set; }
 

@@ -12,11 +12,13 @@ namespace VVPSMS.API.Controllers
     public class UserController : ControllerBase
     {
         private IConfiguration _configuration;
+        IGenericService<MstUserRoleDto> userRolesService;
         IUserService<MstUserDto> userService;
-        public UserController(IUserService<MstUserDto> genericService,  IConfiguration configuration)
+        public UserController(IUserService<MstUserDto> genericService, IGenericService<MstUserRoleDto> userRoleService,  IConfiguration configuration)
         {
             userService = genericService;
             _configuration = configuration;
+            userRolesService = userRoleService;
         }
 
         [HttpGet("{name}")]
@@ -71,7 +73,13 @@ namespace VVPSMS.API.Controllers
         {
             try
             {
-             return  userService.GetAll();
+                var results = userService.GetAll();
+                foreach (var result in results)
+                {
+                    result.RoleName = userRolesService.GetById(result.RoleId).RoleName;
+                }
+           
+             return results;
               
             }
             catch (Exception ex)

@@ -1,5 +1,4 @@
-USE [VVPSMSDBV1]
-GO
+
 /****** Object:  Table [dbo].[MstUsers]    Script Date: 25-12-2023 19:26:09 ******/
 SET ANSI_NULLS ON
 GO

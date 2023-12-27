@@ -19,7 +19,7 @@ public partial class Applicant
 
     public int RoleId { get; set; }
 
-    public string ApplicantLoginType { get; set; } = null!;
+    public string? ApplicantLoginType { get; set; }
 
     public int Enforce2Fa { get; set; }
 

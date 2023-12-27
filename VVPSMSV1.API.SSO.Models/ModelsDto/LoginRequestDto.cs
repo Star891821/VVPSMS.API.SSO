@@ -18,7 +18,7 @@ namespace VVPSMSV1.API.SSO.Models.ModelsDto
 
         public int RoleId { get; set; }
 
-        public string UserType { get; set; }
+       // public string UserType { get; set; }
 
         public string? Phone { get; set; }
 

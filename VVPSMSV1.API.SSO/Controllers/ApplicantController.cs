@@ -71,7 +71,6 @@ namespace VVPSMSV1.API.SSO.Controllers
                     Applicantname = CommonMethods.EncryptPassword(_configuration["PassPhrase:Key"], request.name),
                     RoleId =request.RoleId,
                     Applicantemail = CommonMethods.EncryptPassword(_configuration["PassPhrase:Key"], request.email),
-                    ApplicantLoginType = request.UserType,
                     ApplicantGivenName = "",
                     Applicantpassword = CommonMethods.EncryptPassword(_configuration["PassPhrase:Key"], request.Password),
                     ApplicantPhone = request.Phone,
