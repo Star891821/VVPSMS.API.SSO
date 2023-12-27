@@ -20,7 +20,29 @@ namespace VVPSMS.API.Controllers
             _configuration = configuration;
             userRolesService = userRoleService;
         }
-
+        [HttpGet("{name}")]
+        [AllowAnonymous]
+        public string CheckUserNameExists(string name)
+        {
+            string checkExits = string.Empty;
+            try
+            {
+                var item = userService.GetByName(name);
+                if (item != null)
+                {
+                    checkExits = "taken";
+                }
+                else
+                {
+                    checkExits = "not_taken";
+                }
+            }
+            catch (Exception ex)
+            {
+               
+            }
+            return checkExits;
+        }
         [HttpGet("{name}")]
         [AllowAnonymous]
         public IActionResult? GetUserByName(string name)
