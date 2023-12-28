@@ -4,5 +4,6 @@
     {
         T InsertOrUpdate(T entity);
         T? GetByName(string name);
+        T? GetByEmail(string emailid);
     }
 }

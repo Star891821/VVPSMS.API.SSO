@@ -59,7 +59,14 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
                 return _mapper.Map<MstUserDto>(result);
             }
         }
-
+        public MstUserDto? GetByEmail(string emailid)
+        {
+            using (var dbContext = new VvpsmsSsoContext())
+            {
+                var result = dbContext.MstUsers?.FirstOrDefault(e => e.Useremail.Equals(emailid));
+                return _mapper.Map<MstUserDto>(result);
+            }
+        }
         public MstUserDto InsertOrUpdate(MstUserDto entity)
         {
             using (var dbContext = new VvpsmsSsoContext())

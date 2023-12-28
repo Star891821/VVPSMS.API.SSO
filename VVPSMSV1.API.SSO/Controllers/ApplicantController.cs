@@ -85,7 +85,30 @@ namespace VVPSMSV1.API.SSO.Controllers
             }
             return checkExits;
         }
+        [HttpGet("{emailid}")]
+        [AllowAnonymous]
+        public string CheckApplicantEmailExists(string emailid)
+        {
+            string checkExits = string.Empty;
+            try
+            {
+                emailid = CommonMethods.EncryptPassword(_configuration["PassPhrase:Key"], emailid);
+                var item = applicantService.GetByEmail(emailid);
+                if (item != null)
+                {
+                    checkExits = "taken";
+                }
+                else
+                {
+                    checkExits = "not_taken";
+                }
+            }
+            catch (Exception ex)
+            {
 
+            }
+            return checkExits;
+        }
         [HttpPost, ActionName("InsertOrUpdateWithResponse")]
         [AllowAnonymous]
         public ApplicantDto InsertOrUpdateWithResponse([FromBody] LoginRequestDto request)

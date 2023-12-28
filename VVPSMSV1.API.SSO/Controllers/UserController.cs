@@ -43,6 +43,29 @@ namespace VVPSMS.API.Controllers
             }
             return checkExits;
         }
+        [HttpGet("{emailid}")]
+        [AllowAnonymous]
+        public string CheckUserEmailExists(string emailid)
+        {
+            string checkExits = string.Empty;
+            try
+            {
+                var item = userService.GetByEmail(emailid);
+                if (item != null)
+                {
+                    checkExits = "taken";
+                }
+                else
+                {
+                    checkExits = "not_taken";
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return checkExits;
+        }
         [HttpGet("{name}")]
         [AllowAnonymous]
         public IActionResult? GetUserByName(string name)

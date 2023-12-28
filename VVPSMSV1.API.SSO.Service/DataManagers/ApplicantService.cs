@@ -45,6 +45,14 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
                 return _mapper.Map<ApplicantDto>(result);
             }
         }
+        public ApplicantDto? GetByEmail(string emailid)
+        {
+            using (var dbContext = new VvpsmsSsoContext())
+            {
+                var result = dbContext.Applicants?.FirstOrDefault(e => e.Applicantemail.Equals(emailid));
+                return _mapper.Map<ApplicantDto>(result);
+            }
+        }
         public List<ApplicantDto> GetAll()
         {
             using (var dbContext = new VvpsmsSsoContext())
