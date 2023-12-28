@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using VVPSMSV1.API.SSO.Models.ModelsDto;
+using VVPSMSV1.API.SSO.Service.DataManagers;
 using VVPSMSV1.API.SSO.Service.Interfaces;
 
 namespace VVPSMS.API.Controllers.MasterControllers
@@ -9,49 +10,72 @@ namespace VVPSMS.API.Controllers.MasterControllers
     [ApiController]
     public class UserPermissionsController : Controller
     {
-        IGenericService<MstPermissionDto> GenericService;
-        public UserPermissionsController(IGenericService<MstPermissionDto> genericService)
+        IUserPermissionService<MstPermissionDto> GenericService;
+        public UserPermissionsController(IUserPermissionService<MstPermissionDto> genericService)
         {
             GenericService = genericService;
         }
 
         [HttpGet]
-        public IActionResult? GetAll()
+        public List<MstPermissionDto> GetAll()
         {
             try
             {
-                return Ok(GenericService.GetAll());
+                return GenericService.GetAll();
             }
             catch (Exception ex)
             {
-                return StatusCode(500);
+                return null;
             }
         }
 
         [HttpGet("{id}")]
-        public IActionResult? GetById(int id)
+        public MstPermissionDto GetById(int id)
         {
             try
             {
-                return Ok(GenericService.GetById(id));
+                return GenericService.GetById(id);
             }
             catch (Exception ex)
             {
-                return StatusCode(500);
+                return null;
             }
         }
 
-
-        [HttpPost, ActionName("InsertOrUpdate")]
-        public IActionResult Post([FromBody] MstPermissionDto value)
+        [HttpGet("{name}")]
+        [AllowAnonymous]
+        public string CheckPermissionNameExists(string name)
         {
+            string checkExits = string.Empty;
             try
             {
-                return Ok(GenericService.InsertOrUpdate(value));
+                var item = GenericService.GetByName(name);
+                if (item != null)
+                {
+                    checkExits = "taken";
+                }
+                else
+                {
+                    checkExits = "not_taken";
+                }
             }
             catch (Exception ex)
             {
-                return StatusCode(500);
+
+            }
+            return checkExits;
+        }
+
+        [HttpPost, ActionName("InsertOrUpdate")]
+        public MstPermissionDto Post([FromBody] MstPermissionDto value)
+        {
+            try
+            {
+                return GenericService.InsertOrUpdateWithResponse(value);
+            }
+            catch (Exception ex)
+            {
+                return null;
             }
         }
 
