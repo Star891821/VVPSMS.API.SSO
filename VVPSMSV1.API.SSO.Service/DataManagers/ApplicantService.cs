@@ -37,7 +37,14 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
                 return true;
             }
         }
-
+        public ApplicantDto? GetByName(string applicantName)
+        {
+            using (var dbContext = new VvpsmsSsoContext())
+            {
+                var result = dbContext.Applicants?.FirstOrDefault(e => e.Applicantname.Equals(applicantName));
+                return _mapper.Map<ApplicantDto>(result);
+            }
+        }
         public List<ApplicantDto> GetAll()
         {
             using (var dbContext = new VvpsmsSsoContext())

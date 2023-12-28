@@ -14,10 +14,12 @@ namespace VVPSMSV1.API.SSO.Controllers
     {
         private IConfiguration _configuration;
         IApplicantService<ApplicantDto> applicantService;
-        public ApplicantController(IApplicantService<ApplicantDto> genericService, IConfiguration configuration)
+        IGenericService<MstUserRoleDto> userRolesService;
+        public ApplicantController(IApplicantService<ApplicantDto> genericService, IGenericService<MstUserRoleDto> userRoleService, IConfiguration configuration)
         {
             applicantService = genericService;
             _configuration = configuration;
+            userRolesService = userRoleService;
         }
         [HttpGet]
         public List<ApplicantDto> GetAll()
@@ -30,6 +32,7 @@ namespace VVPSMSV1.API.SSO.Controllers
                     result.Applicantpassword = CommonMethods.DecryptPassword(_configuration["PassPhrase:Key"], result.Applicantpassword);
                     result.Applicantname = CommonMethods.DecryptPassword(_configuration["PassPhrase:Key"], result.Applicantname);
                     result.Applicantemail = CommonMethods.DecryptPassword(_configuration["PassPhrase:Key"], result.Applicantemail);
+                    result.RoleName = userRolesService.GetById(result.RoleId).RoleName;
                 }
 
                 return results;
@@ -57,6 +60,29 @@ namespace VVPSMSV1.API.SSO.Controllers
             {
                 return null;
             }
+        }
+        [HttpGet("{name}")]
+        [AllowAnonymous]
+        public string CheckApplicantNameExists(string name)
+        {
+            string checkExits = string.Empty;
+            try
+            {
+                var item = applicantService.GetByName(name);
+                if (item != null)
+                {
+                    checkExits = "taken";
+                }
+                else
+                {
+                    checkExits = "not_taken";
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return checkExits;
         }
 
         [HttpPost, ActionName("InsertOrUpdateWithResponse")]
