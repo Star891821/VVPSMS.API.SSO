@@ -68,6 +68,7 @@ namespace VVPSMSV1.API.SSO.Controllers
             string checkExits = string.Empty;
             try
             {
+                name = CommonMethods.EncryptPassword(_configuration["PassPhrase:Key"],name);
                 var item = applicantService.GetByName(name);
                 if (item != null)
                 {
