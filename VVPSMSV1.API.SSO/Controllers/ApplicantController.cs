@@ -14,8 +14,8 @@ namespace VVPSMSV1.API.SSO.Controllers
     {
         private IConfiguration _configuration;
         IApplicantService<ApplicantDto> applicantService;
-        IGenericService<MstUserRoleDto> userRolesService;
-        public ApplicantController(IApplicantService<ApplicantDto> genericService, IGenericService<MstUserRoleDto> userRoleService, IConfiguration configuration)
+        IUserRoleService<MstUserRoleDto> userRolesService;
+        public ApplicantController(IApplicantService<ApplicantDto> genericService, IUserRoleService<MstUserRoleDto> userRoleService, IConfiguration configuration)
         {
             applicantService = genericService;
             _configuration = configuration;

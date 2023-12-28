@@ -12,9 +12,9 @@ namespace VVPSMS.API.Controllers
     public class UserController : ControllerBase
     {
         private IConfiguration _configuration;
-        IGenericService<MstUserRoleDto> userRolesService;
+        IUserRoleService<MstUserRoleDto> userRolesService;
         IUserService<MstUserDto> userService;
-        public UserController(IUserService<MstUserDto> genericService, IGenericService<MstUserRoleDto> userRoleService,  IConfiguration configuration)
+        public UserController(IUserService<MstUserDto> genericService, IUserRoleService<MstUserRoleDto> userRoleService,  IConfiguration configuration)
         {
             userService = genericService;
             _configuration = configuration;

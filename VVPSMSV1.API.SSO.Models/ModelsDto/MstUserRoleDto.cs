@@ -17,7 +17,8 @@ namespace VVPSMSV1.API.SSO.Models.ModelsDto
 
         public int? ModifiedBy { get; set; }
 
-        public int? RoletypeId { get; set; }
+        public int RoletypeId { get; set; }
+        public string RoletypeName { get; set; }
 
     }
 }

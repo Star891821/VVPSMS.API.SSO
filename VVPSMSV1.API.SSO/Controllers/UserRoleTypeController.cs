@@ -3,33 +3,25 @@ using Microsoft.AspNetCore.Mvc;
 using VVPSMSV1.API.SSO.Models.ModelsDto;
 using VVPSMSV1.API.SSO.Service.Interfaces;
 
-namespace VVPSMS.API.Controllers.MasterControllers
+namespace VVPSMSV1.API.SSO.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-
-    public class UserRoleController : ControllerBase 
+    public class UserRoleTypeController : Controller
     {
-        IUserRoleService<MstUserRoleDto> GenericService;
-        IUserRoleType<MstRoleTypeDto> UserRoleTypeService;
-        public UserRoleController(IUserRoleService<MstUserRoleDto> genericService, IUserRoleType<MstRoleTypeDto> userRoleType)
+        IUserRoleType<MstRoleTypeDto> GenericService;
+        public UserRoleTypeController(IUserRoleType<MstRoleTypeDto> genericService)
         {
             GenericService = genericService;
-            UserRoleTypeService = userRoleType;
         }
 
         [HttpGet]
         [AllowAnonymous]
-        public List<MstUserRoleDto> GetAll()
+        public List<MstRoleTypeDto> GetAll()
         {
             try
             {
-                var results =  GenericService.GetAll();
-                foreach(var result in results)
-                {
-                    result.RoletypeName = UserRoleTypeService.GetById(result.RoletypeId).RoletypeName;
-                }
-                return results;
+                return GenericService.GetAll();
             }
             catch (Exception ex)
             {
@@ -39,7 +31,7 @@ namespace VVPSMS.API.Controllers.MasterControllers
 
         [HttpGet("{id}")]
         [AllowAnonymous]
-        public MstUserRoleDto GetById(int id)
+        public MstRoleTypeDto GetById(int id)
         {
             try
             {
@@ -77,7 +69,7 @@ namespace VVPSMS.API.Controllers.MasterControllers
 
         [HttpPost, ActionName("InsertOrUpdate")]
         [AllowAnonymous]
-        public MstUserRoleDto Post([FromBody] MstUserRoleDto value)
+        public MstRoleTypeDto Post([FromBody] MstRoleTypeDto value)
         {
             try
             {
