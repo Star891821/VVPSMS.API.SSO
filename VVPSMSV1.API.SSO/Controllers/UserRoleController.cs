@@ -10,8 +10,8 @@ namespace VVPSMS.API.Controllers.MasterControllers
 
     public class UserRoleController : ControllerBase 
     {
-        IGenericService<MstUserRoleDto> GenericService;
-        public UserRoleController(IGenericService<MstUserRoleDto> genericService)
+        IUserRoleService<MstUserRoleDto> GenericService;
+        public UserRoleController(IUserRoleService<MstUserRoleDto> genericService)
         {
             GenericService = genericService;
         }
@@ -32,30 +32,53 @@ namespace VVPSMS.API.Controllers.MasterControllers
 
         [HttpGet("{id}")]
         [AllowAnonymous]
-        public IActionResult? GetById(int id)
+        public MstUserRoleDto GetById(int id)
         {
             try
             {
-                return Ok(GenericService.GetById(id));
+                return GenericService.GetById(id);
             }
             catch (Exception ex)
             {
-                return StatusCode(500);
+                return null;
             }
         }
 
-
-        [HttpPost, ActionName("InsertOrUpdate")]
+        [HttpGet("{name}")]
         [AllowAnonymous]
-        public IActionResult Post([FromBody] MstUserRoleDto value)
+        public string CheckRoleNameExists(string name)
         {
+            string checkExits = string.Empty;
             try
             {
-                return Ok(GenericService.InsertOrUpdate(value));
+                var item = GenericService.GetByName(name);
+                if (item != null)
+                {
+                    checkExits = "taken";
+                }
+                else
+                {
+                    checkExits = "not_taken";
+                }
             }
             catch (Exception ex)
             {
-                return StatusCode(500);
+
+            }
+            return checkExits;
+        }
+
+        [HttpPost, ActionName("InsertOrUpdate")]
+        [AllowAnonymous]
+        public MstUserRoleDto Post([FromBody] MstUserRoleDto value)
+        {
+            try
+            {
+                return GenericService.InsertOrUpdateWithResponse(value);
+            }
+            catch (Exception ex)
+            {
+                return null;
             }
         }
 

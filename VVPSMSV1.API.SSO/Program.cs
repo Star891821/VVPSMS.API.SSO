@@ -100,7 +100,7 @@ builder.Services.AddTransient<IMicroSoftSSOService<MicroSoftConfigurationDto>, M
 builder.Services.AddTransient<IAzureSSOService<AzureBlobConfigurationDto>, AzureSSOService>();
 //builder.Services.AddScoped<ITeacherUnitOfWork, TeacherUnitOfWork>();
 //builder.Services.AddScoped<IParentUnitOfWork, ParentUnitOfWork>();
-builder.Services.AddTransient<IGenericService<MstUserRoleDto>, MstUserRoleService>();
+builder.Services.AddTransient<IUserRoleService<MstUserRoleDto>, MstUserRoleService>();
 builder.Services.AddTransient<IUserPermissionService<MstPermissionDto>,MstPermissionService>();
 builder.Services.AddTransient<IUserService<MstUserDto>, UserService>();
 builder.Services.AddTransient<IApplicantService<ApplicantDto>, ApplicantService>();

@@ -1,18 +1,67 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using VVPSMSV1.API.SSO.Domain.Models;
+using VVPSMSV1.API.SSO.Models.Enums;
 using VVPSMSV1.API.SSO.Models.ModelsDto;
 using VVPSMSV1.API.SSO.Service.Interfaces;
 
 namespace VVPSMSV1.API.SSO.Service.DataManagers
 {
-    public class MstUserRoleService : IGenericService<MstUserRoleDto>
+    public class MstUserRoleService : IUserRoleService<MstUserRoleDto>
     {
         private IMapper _mapper;
         public MstUserRoleService(IMapper mapper)
         {
             _mapper = mapper;
         }
+        public MstUserRoleDto InsertOrUpdateWithResponse(MstUserRoleDto entity)
+        {
+            using (var dbContext = new VvpsmsSsoContext())
+            {
+                if (entity != null)
+                {
 
+                    if (entity.RoleId != 0)
+                    {
+                        var dbentity = dbContext.MstUserRoles.FirstOrDefault(e => e.RoleId == entity.RoleId);
+                        if (dbentity != null)
+                        {
+
+                            dbContext.Entry(dbentity).CurrentValues.SetValues(_mapper.Map<MstUserRole>(entity));
+                        }
+                        else
+                        {
+                            throw new Exception(ErrorCode.MissingData.ToString());
+                        }
+                    }
+                    else
+                    {
+                        var existingPermission = dbContext.MstUserRoles.FirstOrDefault(x => x.RoleName.Equals(entity.RoleName));
+                        if (existingPermission != null)
+                        {
+                            return _mapper.Map<MstUserRoleDto>(existingPermission);
+                        }
+                        else
+                        {
+                            dbContext.MstUserRoles.Add(_mapper.Map<MstUserRole>(entity));
+                        }
+
+                    }
+                    dbContext.SaveChanges();
+                }
+                return _mapper.Map<MstUserRoleDto>(dbContext.MstUserRoles.AsNoTracking().First(x => x.RoleName == entity.RoleName));
+
+
+            }
+        }
+        public MstUserRoleDto? GetByName(string roleName)
+        {
+            using (var dbContext = new VvpsmsSsoContext())
+            {
+                var result = dbContext.MstUserRoles?.FirstOrDefault(e => e.RoleName.Equals(roleName));
+                return _mapper.Map<MstUserRoleDto>(result);
+            }
+        }
 
         public bool Delete(int id)
         {
