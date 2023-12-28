@@ -165,29 +165,18 @@ namespace VVPSMS.API.Controllers
         }
 
         [HttpDelete]
-        public IActionResult Delete(int id)
+        public bool Delete(int id)
         {
-            var statusCode = StatusCodes.Status200OK;
-            object? value = null;
             try
             {
-                var item = userService.Delete(id);
-                if (item == null)
-                {
-                    statusCode = StatusCodes.Status404NotFound;
-                    value = "Delete data is not found";
-                }
-                else
-                {
-                    value = item;
-                }
+                return userService.Delete(id);
+               
             }
             catch (Exception ex)
             {
-                statusCode = StatusCodes.Status500InternalServerError;
-                value = ex.Message;
+                
             }
-            return StatusCode(statusCode, value);
+            return false;
         }
 
     }

@@ -90,16 +90,17 @@ namespace VVPSMS.API.Controllers.MasterControllers
         }
 
         [HttpDelete]
-        public IActionResult Delete(int id)
+        public bool Delete(int id)
         {
             try
             {
-                return Ok(GenericService.Delete(id));
+                return GenericService.Delete(id);
             }
             catch (Exception ex)
             {
-                return StatusCode(500);
+
             }
+            return false;
         }
 
     }
