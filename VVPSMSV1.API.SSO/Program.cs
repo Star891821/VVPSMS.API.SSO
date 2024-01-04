@@ -7,6 +7,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 using System.Text.Json.Serialization;
+using VVPSMS.Service.DataManagers;
+using VVPSMS.Service.Repository;
 using VVPSMSV1.API.SSO.AutoMapper;
 using VVPSMSV1.API.SSO.Domain.Models;
 using VVPSMSV1.API.SSO.Models.ModelsDto;
@@ -94,6 +96,7 @@ builder.Services.AddDbContext<VvpsmsSsoContext>(options =>
     options.EnableSensitiveDataLogging();
 
 });
+builder.Services.AddTransient<ILoginService, LoginService>();
 builder.Services.AddTransient<IStorageService, StorageService>();
 builder.Services.AddTransient<IGoogleSSOService<GoogleConfigurationDto>, GoogleSSOService>();
 builder.Services.AddTransient<IMicroSoftSSOService<MicroSoftConfigurationDto>, MicroSoftSSOService>();
