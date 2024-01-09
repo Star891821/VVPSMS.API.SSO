@@ -23,10 +23,11 @@ namespace VVPSMSV1.API.SSO.Controllers
             _configuration = configuration;
         }
         [AllowAnonymous]
-        [Microsoft.AspNetCore.Mvc.HttpPost("Authenticate")]
+        [HttpPost, ActionName("AuthenticateUsers")]
+        // [Microsoft.AspNetCore.Mvc.HttpPost("Authenticate")]
         public async Task<IActionResult> AuthenticateUsers(LoginRequestSSO loginRequest)
         {
-            IActionResult response = Unauthorized();
+           // IActionResult response = Unauthorized();
             if (loginRequest != null)
             {
                 if (loginRequest.UserType.ToUpper() == "APPLICANT")
@@ -52,10 +53,11 @@ namespace VVPSMSV1.API.SSO.Controllers
                         StatusCode = Unauthorized().StatusCode.ToString(),
                         Message = "Failure"
                     };
-                    return Unauthorized(error);
+                    return Ok(error);
                 }
             }
-            return response;
+            return BadRequest();
+          //  return response;
         }
     }
 }
