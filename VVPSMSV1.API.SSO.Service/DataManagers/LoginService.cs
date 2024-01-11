@@ -18,6 +18,7 @@ namespace VVPSMS.Service.DataManagers
             LoginResponseSSO loginResponseDto = null;
             try
             {
+                var userrole = await _vvpsmsdbContext.MstUserRoles.FirstOrDefaultAsync(x => x.RoleName == loginRequest.UserType);
                 switch (loginRequest.UserType.ToUpper())
                 {
                     case "APPLICANT":
@@ -42,7 +43,7 @@ namespace VVPSMS.Service.DataManagers
                         break;
                     default:
                         var user = await _vvpsmsdbContext.MstUsers.FirstOrDefaultAsync(x => x.Username == loginRequest.UserName
-                        && x.Userpassword == loginRequest.Password);
+                        && x.Userpassword == loginRequest.Password && x.RoleId == userrole.RoleId);
                         if (user != null)
                         {
                             loginResponseDto = new LoginResponseSSO()
