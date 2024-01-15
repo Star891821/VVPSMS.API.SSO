@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace VVPSMSV1.API.SSO.Domain.Models;
 
-public partial class VvpsmsSsoContext : DbContext
+public partial class VvpsmsdbSsoContext : DbContext
 {
-    public VvpsmsSsoContext()
+    public VvpsmsdbSsoContext()
     {
     }
 
-    public VvpsmsSsoContext(DbContextOptions<VvpsmsSsoContext> options)
+    public VvpsmsdbSsoContext(DbContextOptions<VvpsmsdbSsoContext> options)
         : base(options)
     {
     }
@@ -35,18 +35,17 @@ public partial class VvpsmsSsoContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=Dell;Initial Catalog=VVPSMS_SSO;User Id=sa;Password=sql2019;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true;Integrated Security=false;Column Encryption Setting=enabled;");
+        => optionsBuilder.UseSqlServer("Server=Dell;Initial Catalog=VVPSMSDB_SSO;User Id=sa;Password=sql2019;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true;Integrated Security=false;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Applicant>(entity =>
         {
-            entity.HasKey(e => e.ApplicantId).HasName("PK__tmp_ms_x__F49C60C16DF00562");
+            entity.HasKey(e => e.ApplicantId).HasName("PK__Applican__F49C60C107754BF9");
 
             entity.Property(e => e.ApplicantId).HasColumnName("applicant_id");
             entity.Property(e => e.ApplicantGivenName)
                 .HasMaxLength(255)
-                .UseCollation("Latin1_General_BIN2")
                 .HasColumnName("applicant_givenName");
             entity.Property(e => e.ApplicantLoginType)
                 .HasMaxLength(255)
@@ -59,15 +58,12 @@ public partial class VvpsmsSsoContext : DbContext
                 .HasColumnName("applicant_surname");
             entity.Property(e => e.Applicantemail)
                 .HasMaxLength(255)
-                .UseCollation("Latin1_General_BIN2")
                 .HasColumnName("applicantemail");
             entity.Property(e => e.Applicantname)
                 .HasMaxLength(255)
-                .UseCollation("Latin1_General_BIN2")
                 .HasColumnName("applicantname");
             entity.Property(e => e.Applicantpassword)
                 .HasMaxLength(255)
-                .UseCollation("Latin1_General_BIN2")
                 .HasColumnName("applicantpassword");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("(getdate())")
@@ -87,7 +83,7 @@ public partial class VvpsmsSsoContext : DbContext
             entity.HasOne(d => d.Role).WithMany(p => p.Applicants)
                 .HasForeignKey(d => d.RoleId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Applicant__role___5535A963");
+                .HasConstraintName("FK__Applicant__role___74AE54BC");
         });
 
         modelBuilder.Entity<AzureBlobConfiguration>(entity =>
