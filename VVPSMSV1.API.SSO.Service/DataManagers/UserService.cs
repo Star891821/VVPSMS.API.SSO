@@ -21,7 +21,7 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
         }
         public bool Delete(int id)
         {
-            using (var dbContext = new VvpsmsSsoContext())
+            using (var dbContext = new VvpsmsdbSsoContext())
             {
                 var entity = dbContext.MstUsers.FirstOrDefault(e => e.UserId == id);
                 if (entity != null)
@@ -35,7 +35,7 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
 
         public List<MstUserDto> GetAll()
         {
-            using (var dbContext = new VvpsmsSsoContext())
+            using (var dbContext = new VvpsmsdbSsoContext())
             {
                 var result = dbContext.MstUsers.ToList();
                 return _mapper.Map<List<MstUserDto>>(result);
@@ -44,7 +44,7 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
 
         public MstUserDto? GetById(int id)
         {
-            using (var dbContext = new VvpsmsSsoContext())
+            using (var dbContext = new VvpsmsdbSsoContext())
             {
                 var result = dbContext.MstUsers?.FirstOrDefault(e => e.UserId.Equals(id));
                 return _mapper.Map<MstUserDto>(result);
@@ -53,7 +53,7 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
 
         public MstUserDto? GetByName(string userName)
         {
-            using (var dbContext = new VvpsmsSsoContext())
+            using (var dbContext = new VvpsmsdbSsoContext())
             {
                 var result = dbContext.MstUsers?.FirstOrDefault(e => e.Username.Equals(userName));
                 return _mapper.Map<MstUserDto>(result);
@@ -61,7 +61,7 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
         }
         public MstUserDto? GetByEmail(string emailid)
         {
-            using (var dbContext = new VvpsmsSsoContext())
+            using (var dbContext = new VvpsmsdbSsoContext())
             {
                 var result = dbContext.MstUsers?.FirstOrDefault(e => e.Useremail.Equals(emailid));
                 return _mapper.Map<MstUserDto>(result);
@@ -69,7 +69,7 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
         }
         public MstUserDto InsertOrUpdate(MstUserDto entity)
         {
-            using (var dbContext = new VvpsmsSsoContext())
+            using (var dbContext = new VvpsmsdbSsoContext())
             {
                 if (entity != null)
                 {

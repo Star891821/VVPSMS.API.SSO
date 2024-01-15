@@ -21,7 +21,7 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
         }
         public MstRoleTypeDto InsertOrUpdateWithResponse(MstRoleTypeDto entity)
         {
-            using (var dbContext = new VvpsmsSsoContext())
+            using (var dbContext = new VvpsmsdbSsoContext())
             {
                 if (entity != null)
                 {
@@ -61,7 +61,7 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
         }
         public MstRoleTypeDto? GetByName(string roleName)
         {
-            using (var dbContext = new VvpsmsSsoContext())
+            using (var dbContext = new VvpsmsdbSsoContext())
             {
                 var result = dbContext.MstRoleTypes?.FirstOrDefault(e => e.RoletypeName.Equals(roleName));
                 return _mapper.Map<MstRoleTypeDto>(result);
@@ -70,7 +70,7 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
 
         public bool Delete(int id)
         {
-            using (var dbContext = new VvpsmsSsoContext())
+            using (var dbContext = new VvpsmsdbSsoContext())
             {
                 var entity = dbContext.MstRoleTypes.FirstOrDefault(e => e.RoletypeId == id);
 
@@ -87,7 +87,7 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
 
         public List<MstRoleTypeDto> GetAll()
         {
-            using (var dbContext = new VvpsmsSsoContext())
+            using (var dbContext = new VvpsmsdbSsoContext())
             {
                 var result = dbContext.MstRoleTypes.ToList();
                 return _mapper.Map<List<MstRoleTypeDto>>(result);
@@ -96,7 +96,7 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
 
         public MstRoleTypeDto? GetById(int id)
         {
-            using (var dbContext = new VvpsmsSsoContext())
+            using (var dbContext = new VvpsmsdbSsoContext())
             {
                 var result = dbContext.MstRoleTypes?.FirstOrDefault(e => e.RoletypeId.Equals(id));
                 return _mapper.Map<MstRoleTypeDto>(result);
@@ -105,7 +105,7 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
 
         public bool InsertOrUpdate(MstRoleTypeDto entity)
         {
-            using (var dbContext = new VvpsmsSsoContext())
+            using (var dbContext = new VvpsmsdbSsoContext())
             {
                 if (entity != null)
                 {

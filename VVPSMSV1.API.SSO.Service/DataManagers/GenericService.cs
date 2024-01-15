@@ -7,10 +7,10 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
 {
     public class GenericService<T> : ICommonService<T> where T : class
     {
-        protected VvpsmsSsoContext context;
+        protected VvpsmsdbSsoContext context;
         internal DbSet<T> dbSet;
 
-        public GenericService(VvpsmsSsoContext context)
+        public GenericService(VvpsmsdbSsoContext context)
         {
             this.context = context;
             dbSet = context.Set<T>();

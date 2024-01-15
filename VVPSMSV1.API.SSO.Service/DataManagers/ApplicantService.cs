@@ -26,7 +26,7 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
         }
         public bool Delete(int id)
         {
-            using (var dbContext = new VvpsmsSsoContext())
+            using (var dbContext = new VvpsmsdbSsoContext())
             {
                 var entity = dbContext.Applicants.FirstOrDefault(e => e.ApplicantId == id);
                 if (entity != null)
@@ -39,7 +39,7 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
         }
         public ApplicantDto? GetByName(string applicantName)
         {
-            using (var dbContext = new VvpsmsSsoContext())
+            using (var dbContext = new VvpsmsdbSsoContext())
             {
                 var result = dbContext.Applicants?.FirstOrDefault(e => e.Applicantname.Equals(applicantName));
                 return _mapper.Map<ApplicantDto>(result);
@@ -47,7 +47,7 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
         }
         public ApplicantDto? GetByEmail(string emailid)
         {
-            using (var dbContext = new VvpsmsSsoContext())
+            using (var dbContext = new VvpsmsdbSsoContext())
             {
                 var result = dbContext.Applicants?.FirstOrDefault(e => e.Applicantemail.Equals(emailid));
                 return _mapper.Map<ApplicantDto>(result);
@@ -55,7 +55,7 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
         }
         public List<ApplicantDto> GetAll()
         {
-            using (var dbContext = new VvpsmsSsoContext())
+            using (var dbContext = new VvpsmsdbSsoContext())
             {
                 var result = dbContext.Applicants.ToList();
                 return _mapper.Map<List<ApplicantDto>>(result);
@@ -64,7 +64,7 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
 
         public ApplicantDto? GetById(int id)
         {
-            using (var dbContext = new VvpsmsSsoContext())
+            using (var dbContext = new VvpsmsdbSsoContext())
             {
                 var result = dbContext.Applicants?.FirstOrDefault(e => e.ApplicantId.Equals(id));
                 return _mapper.Map<ApplicantDto>(result);
@@ -75,7 +75,7 @@ namespace VVPSMSV1.API.SSO.Service.DataManagers
 
         public ApplicantDto InsertOrUpdate(ApplicantDto entity)
         {
-            using (var dbContext = new VvpsmsSsoContext())
+            using (var dbContext = new VvpsmsdbSsoContext())
             {
                 if (entity != null)
                 {

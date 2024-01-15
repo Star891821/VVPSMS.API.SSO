@@ -90,7 +90,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.DefaultIgnoreCondition =
         JsonIgnoreCondition.WhenWritingNull;
 });
-builder.Services.AddDbContext<VvpsmsSsoContext>(options =>
+builder.Services.AddDbContext<VvpsmsdbSsoContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("VVPSMSDBV1"));
     options.EnableSensitiveDataLogging();

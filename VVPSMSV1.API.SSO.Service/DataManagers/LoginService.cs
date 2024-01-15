@@ -7,10 +7,10 @@ namespace VVPSMS.Service.DataManagers
 {
     public class LoginService : ILoginService
     {
-        readonly VvpsmsSsoContext _vvpsmsdbContext;
+        readonly VvpsmsdbSsoContext _vvpsmsdbContext;
         public LoginService()
         {
-            _vvpsmsdbContext = new VvpsmsSsoContext();
+            _vvpsmsdbContext = new VvpsmsdbSsoContext();
         }
 
         public async Task<LoginResponseSSO> LoginDetails(LoginRequestSSO loginRequest)
